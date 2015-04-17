@@ -253,3 +253,16 @@ footer {
     color:#444;
   }
 }
+
+.paginationArea {
+  text-align: center;
+}
+
+span.form-control {
+  border: none;
+  -webkit-box-shadow: none;
+}
+
+[class$="error"], [id$="errors"] {
+  color: #ff0000;
+}

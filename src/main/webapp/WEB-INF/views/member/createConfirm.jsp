@@ -2,61 +2,65 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Member Create Form</title>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <title>Member Creation Confirm</title>
+    <jsp:include page="/WEB-INF/views/common/inc/links.jsp"/>
 </head>
 <body>
 <div id="wrapper">
-
-    <c:url value="/member" var="creatingUrl"/>
-    <form:form action="${creatingUrl}" cssClass="form-horizontal" modelAttribute="memberForm">
+    <c:url value="/members" var="createPath"/>
+    <form:form action="${createPath}" cssClass="form-horizontal" modelAttribute="memberForm">
         <div class="form-group">
-            <form:label path="id" cssClass="col-sm-3 control-label required">会員ID</form:label>
+            <form:label path="id" cssClass="col-sm-3 control-label">Member ID</form:label>
             <div class="col-sm-4">
-                <form:input cssClass="form-control" path="id" readonly="true"/>
-            </div>
-            <div class="col-sm-4">
-                <form:errors cssClass="control-label" path="id"/>
+                <span class="form-control">${f:h(memberForm.id)}</span>
+                <form:hidden path="id"/>
             </div>
         </div>
         <div class="form-group">
-            <form:label path="name" cssClass="col-sm-3 control-label required">氏名</form:label>
+            <form:label path="name" cssClass="col-sm-3 control-label">Personal Name</form:label>
             <div class="col-sm-4">
-                <form:input cssClass="form-control" path="name" readonly="true"/>
-            </div>
-            <div class="col-sm-4">
-                <form:errors cssClass="control-label" path="name"/>
+                <span class="form-control">${f:h(memberForm.name)}</span>
+                <form:hidden path="name"/>
             </div>
         </div>
         <div class="form-group">
-            <form:label path="zipCode" cssClass="col-sm-3 control-label required">郵便番号</form:label>
+            <form:label path="mainZipCode" cssClass="col-sm-3 control-label">Zip Code</form:label>
             <div class="col-sm-2">
-                <form:input cssClass="form-control" path="zipCode" readonly="true"/>
-            </div>
-            <div class="col-sm-4">
-                <form:errors cssClass="control-label" path="zipCode"/>
+                <span class="form-control">${f:h(memberForm.mainZipCode)}</span>
+                <form:hidden path="mainZipCode"/>
             </div>
         </div>
         <div class="form-group">
-            <form:label path="address" cssClass="col-sm-3 control-label required">住所</form:label>
+            <form:label path="mainAddress" cssClass="col-sm-3 control-label">Address</form:label>
             <div class="col-sm-4">
-                <form:input cssClass="form-control" path="address" readonly="true"/>
+                <span class="form-control"> ${f:h(memberForm.mainAddress)}</span>
+                <form:hidden path="mainAddress"/>
             </div>
+        </div>
+        <div class="form-group">
+            <form:label path="subZipCode" cssClass="col-sm-3 control-label">Sub Zip Code</form:label>
+            <div class="col-sm-2">
+                <span class="form-control">${f:h(memberForm.subZipCode)}</span>
+                <form:hidden path="subZipCode"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:label path="subAddress" cssClass="col-sm-3 control-label">Sub Address</form:label>
             <div class="col-sm-4">
-                <form:errors cssClass="control-label" path="address"/>
+                <span class="form-control">${f:h(memberForm.subAddress)}</span>
+                <form:hidden path="subAddress"/>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-8">
-                <form:button class="btn btn-default">
-                    <span class="glyphicon glyphicon-ok"></span> 登録</form:button>
-                <form:button class="btn btn-default" name="createRedo">
-                    <span class="glyphicon glyphicon-ok"></span> 戻る</form:button>
+                <form:button type="button"
+                             onclick="alert('Under Construction ...');"
+                             class="btn btn-primary">Create</form:button>
+                <form:button class="btn btn-primary" name="createRedo">Redo Input</form:button>
             </div>
         </div>
     </form:form>
 </div>
 </body>
+<jsp:include page="/WEB-INF/views/common/inc/scripts.jsp"/>
 </html>
