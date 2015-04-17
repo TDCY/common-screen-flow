@@ -1,4 +1,4 @@
-package com.github.kazuki43zoo.app.memper;
+package com.github.kazuki43zoo.app.member;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

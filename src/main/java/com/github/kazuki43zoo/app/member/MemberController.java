@@ -1,4 +1,4 @@
-package com.github.kazuki43zoo.app.memper;
+package com.github.kazuki43zoo.app.member;
 
 import com.github.kazuki43zoo.app.common.flow.CommonScreenFlowPaths;
 import com.github.kazuki43zoo.app.common.flow.CommonScreenFlowSharedHelper;
