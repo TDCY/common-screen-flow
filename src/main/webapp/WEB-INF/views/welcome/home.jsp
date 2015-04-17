@@ -11,7 +11,7 @@
     <p>The time on the server is ${serverTime}.</p>
     <ul>
         <li><a href="<c:url value="/members?clearCreateForm"/>">Member Registration</a></li>
-        <li><a href="<c:url value="/commonFlow/streetAddresses?searchForm&flowCancelPath=/"/>">Street Address Search</a></li>
+        <li><a href="<c:url value="/share/streetAddresses?searchForm&flowCancelPath=/"/>">Street Address Search</a></li>
     </ul>
 </div>
 </body>

@@ -57,6 +57,7 @@
     <!-- Settings View Resolver. -->
     <mvc:view-resolvers>
         <mvc:jsp prefix="/WEB-INF/views/" />
+        <mvc:jsp prefix="/WEB-INF/views/share/" />
     </mvc:view-resolvers>
 
     <bean id="requestDataValueProcessor"
@@ -66,7 +67,7 @@
                 <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
                 <bean
                     class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
-                <bean class="com.github.kazuki43zoo.app.common.flow.CommonScreenFlowRequestDataValueProcessor" />
+                <bean class="com.github.kazuki43zoo.app.share.SharedFlowRequestDataValueProcessor" />
             </util:list>
         </constructor-arg>
     </bean>

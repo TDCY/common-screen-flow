@@ -266,3 +266,7 @@ span.form-control {
 [class$="error"], [id$="errors"] {
   color: #ff0000;
 }
+
+button + button, button + a {
+    margin-left: 5px;
+}

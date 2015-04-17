@@ -71,7 +71,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-8">
-                <form:button class="btn btn-primary" name="createConfirm">Input Completion</form:button>
+                <form:button class="btn btn-primary" name="createConfirm">Confirm</form:button>
                 <a href="${createPath}?clearCreateForm" class="btn btn-primary">Clear</a>
             </div>
         </div>

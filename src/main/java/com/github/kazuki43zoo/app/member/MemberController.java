@@ -1,7 +1,7 @@
 package com.github.kazuki43zoo.app.member;
 
-import com.github.kazuki43zoo.app.common.flow.CommonScreenFlowPaths;
-import com.github.kazuki43zoo.app.common.flow.CommonScreenFlowSharedHelper;
+import com.github.kazuki43zoo.app.share.SharedFlowHelper;
+import com.github.kazuki43zoo.app.share.SharedFlowPaths;
 import com.github.kazuki43zoo.domain.model.StreetAddress;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -45,7 +45,9 @@ public class MemberController {
 
 
     @RequestMapping(method = RequestMethod.POST, params = "createConfirm")
-    public String createConfirm(@Validated MemberForm form, BindingResult bindingResult) {
+    public String createConfirm(
+            @Validated MemberForm form,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return createRedo(form);
         }
@@ -57,36 +59,41 @@ public class MemberController {
     // ### MemberControllerでリクエストデータを受けてから、共通画面フロー側に
     // ### リダイレクトするスタイルを採用している。
     // ### 直接JSPから共通画面フロー側に遷移する場合は、この仕掛けはいらない。
-    Map<String, CommonScreenFlowPaths> addressSearchCommonScreenFlowPathsMap;
+    Map<String, SharedFlowPaths> addressSearchSharedFlowPathsMap;
 
     @Inject
-    CommonScreenFlowSharedHelper commonScreenFlowSharedHelper;
+    SharedFlowHelper sharedFlowHelper;
 
     @PostConstruct
     public void setupAddressSearchCommonScreenFlowPathsMap() {
-        Map<String, CommonScreenFlowPaths> map = new HashMap<>();
-        map.put("mainAddressOnCreation", newCommonScreenFlowPaths("createSelectMainAddress", "createForm"));
-        map.put("subAddressOnCreation", newCommonScreenFlowPaths("createSelectSubAddress", "createForm"));
-        addressSearchCommonScreenFlowPathsMap = Collections.unmodifiableMap(map);
+        Map<String, SharedFlowPaths> map = new HashMap<>();
+        map.put("mainAddressOnCreation", newSharedFlowPaths("createSelectMainAddress", "createForm"));
+        map.put("subAddressOnCreation", newSharedFlowPaths("createSelectSubAddress", "createForm"));
+        addressSearchSharedFlowPathsMap = Collections.unmodifiableMap(map);
     }
 
-    private CommonScreenFlowPaths newCommonScreenFlowPaths(String finishParam, String cancelParam) {
+    private SharedFlowPaths newSharedFlowPaths(String finishParam, String cancelParam) {
         String basePath = "/members?";
-        return new CommonScreenFlowPaths(basePath + finishParam, basePath + cancelParam);
+        return new SharedFlowPaths(basePath + finishParam, basePath + cancelParam);
     }
 
     // ### 検索ボタンが押下された際に、フォームデータを保存した上で共通画面フロー(住所検索)側に遷移するためのメソッド。
     // ### 直接JSPから共通画面フロー側に遷移する場合は、この仕掛けはいらない。(JSP側で同等の処理を行う)
     @RequestMapping(method = RequestMethod.POST, params = "addressSearch")
-    public String gotoAddressSearch(MemberForm form, @RequestParam("addressSearch") String target, RedirectAttributes redirectAttribute) {
-        CommonScreenFlowPaths flowPaths = addressSearchCommonScreenFlowPathsMap.get(target);
-        commonScreenFlowSharedHelper.takeOverQueryParameters(redirectAttribute, flowPaths);
-        return "redirect:/commonFlow/streetAddresses?searchForm";
+    public String gotoAddressSearch(
+            MemberForm form,
+            @RequestParam("addressSearch") String target,
+            RedirectAttributes redirectAttribute) {
+        SharedFlowPaths sharedFlowPaths = addressSearchSharedFlowPathsMap.get(target);
+        sharedFlowHelper.takeOverQueryParameters(redirectAttribute, sharedFlowPaths);
+        return "redirect:/share/streetAddresses?searchForm";
     }
 
     // ### 共通画面フロー(住所検索)側で「選択ボタン」を押下した時のリクエストをハンドリングし、メイン住所に反映するためのメソッド。
     @RequestMapping(method = RequestMethod.POST, params = "createSelectMainAddress")
-    public String createSelectMainAddress(@ModelAttribute MemberForm memberForm, StreetAddress address) {
+    public String createSelectMainAddress(
+            @ModelAttribute MemberForm memberForm,
+            StreetAddress address) {
         memberForm.setMainZipCode(address.getZipCode());
         memberForm.setMainAddress(address.getAddress());
         return createForm();
@@ -94,7 +101,9 @@ public class MemberController {
 
     // ### 共通画面フロー(住所検索)側で「選択ボタン」を押下した時のリクエストをハンドリングし、サブ住所に反映するためのメソッド。
     @RequestMapping(method = RequestMethod.POST, params = "createSelectSubAddress")
-    public String createSelectSubAddress(@ModelAttribute MemberForm memberForm, StreetAddress address) {
+    public String createSelectSubAddress(
+            @ModelAttribute MemberForm memberForm,
+            StreetAddress address) {
         memberForm.setSubZipCode(address.getZipCode());
         memberForm.setSubAddress(address.getAddress());
         return createForm();
