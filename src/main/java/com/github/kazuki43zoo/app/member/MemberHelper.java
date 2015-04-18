@@ -37,8 +37,8 @@ public class MemberHelper {
         return new SharedFlowPaths(basePath + queryStringOnFinish, basePath + queryStringOnCancel);
     }
 
-    SharedFlowPaths decideAddressSearchSharedFlowPaths(String buttonTarget) {
-        return addressSearchSharedFlowPathsMap.get(buttonTarget);
+    SharedFlowPaths decideAddressSearchSharedFlowPaths(String addressSearchButton) {
+        return addressSearchSharedFlowPathsMap.get(addressSearchButton);
     }
 
 }

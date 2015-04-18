@@ -62,36 +62,36 @@ public class MemberController {
         return "member/createConfirm";
     }
 
-    // ### 検索ボタンが押下された際に、フォームデータを保存した上で共通画面フロー(住所検索)側に遷移するためのメソッド。
+    // ### 検索ボタンが押下された際に、フォームデータを保存した後に共通画面フロー(住所検索)側に遷移するためのメソッド。
     // ### 直接JSPから共通画面フロー側に遷移する場合は、この仕掛けはいらない。(JSP側で同等の処理を行う)
     @RequestMapping(method = RequestMethod.POST, params = "addressSearch")
     public String gotoAddressSearch(
             MemberForm form,
-            @RequestParam("addressSearch") String buttonTarget,
+            @RequestParam("addressSearch") String addressSearchButton,
             RedirectAttributes redirectAttribute) {
-        SharedFlowPaths sharedFlowPaths = memberHelper.decideAddressSearchSharedFlowPaths(buttonTarget);
+        SharedFlowPaths sharedFlowPaths = memberHelper.decideAddressSearchSharedFlowPaths(addressSearchButton);
         return sharedFlowHelper.gotoStreetAddressSearch(redirectAttribute, sharedFlowPaths);
     }
 
     // ### 共通画面フロー(住所検索)側で「選択ボタン」を押下した時のリクエストをハンドリングし、メイン住所に反映するためのメソッド。
     @RequestMapping(method = RequestMethod.POST, params = "selectMainAddress")
     public String selectMainAddress(
-            MemberForm memberForm,
-            StreetAddress address,
+            MemberForm form,
+            StreetAddress selectedAddress,
             @RequestParam("destination") String destination) {
-        memberForm.setMainZipCode(address.getZipCode());
-        memberForm.setMainAddress(address.getAddress());
+        form.setMainZipCode(selectedAddress.getZipCode());
+        form.setMainAddress(selectedAddress.getAddress());
         return "redirect:/members?" + destination;
     }
 
     // ### 共通画面フロー(住所検索)側で「選択ボタン」を押下した時のリクエストをハンドリングし、サブ住所に反映するためのメソッド。
     @RequestMapping(method = RequestMethod.POST, params = "selectSubAddress")
     public String selectSubAddress(
-            MemberForm memberForm,
-            StreetAddress address,
+            MemberForm form,
+            StreetAddress selectedAddress,
             @RequestParam("destination") String destination) {
-        memberForm.setSubZipCode(address.getZipCode());
-        memberForm.setSubAddress(address.getAddress());
+        form.setSubZipCode(selectedAddress.getZipCode());
+        form.setSubAddress(selectedAddress.getAddress());
         return "redirect:/members?" + destination;
     }
 
