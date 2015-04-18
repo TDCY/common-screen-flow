@@ -7,10 +7,11 @@
 </head>
 <body>
 <div id="wrapper">
-    <h1>Hello world!</h1>
+    <h1>Home</h1>
+    <h3>Welcome to shared screen flow sample application !</h3>
     <p>The time on the server is ${serverTime}.</p>
     <ul>
-        <li><a href="<c:url value="/members?clearCreateForm"/>">Member Registration</a></li>
+        <li><a href="<c:url value="/members?clearCreateForm"/>">Member Creation</a></li>
         <li><a href="<c:url value="/share/streetAddresses?searchForm&flowCancelPath=/"/>">Street Address Search</a></li>
     </ul>
 </div>

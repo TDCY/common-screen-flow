@@ -13,17 +13,22 @@ public class SharedFlowHelper {
     @Inject
     Mapper beanMapper;
 
-    public void takeOverQueryParameters(RedirectAttributes redirectAttributes, SharedFlowPaths sharedFlowPaths) {
+    public String gotoStreetAddressSearch(RedirectAttributes redirectAttributes, SharedFlowPaths sharedFlowPaths) {
+        takeOverQueryParameters(redirectAttributes, sharedFlowPaths);
+        return "redirect:/share/streetAddresses?searchForm";
+    }
+
+    @SuppressWarnings("unchecked")
+    Map<String, String> toAttributes(SharedFlowPaths sharedFlowPaths) {
+        // For mapping roles, please refer to classpath:/META-INF/dozer/commonScreenFlow-mapping.xml
+        return beanMapper.map(sharedFlowPaths, Map.class);
+    }
+
+    private void takeOverQueryParameters(RedirectAttributes redirectAttributes, SharedFlowPaths sharedFlowPaths) {
         if (sharedFlowPaths == null) {
             return;
         }
         redirectAttributes.addAllAttributes(toAttributes(sharedFlowPaths));
-    }
-
-    @SuppressWarnings("unchecked")
-    public Map<String, String> toAttributes(SharedFlowPaths sharedFlowPaths) {
-        // For mapping roles, please refer to classpath:/META-INF/dozer/commonScreenFlow-mapping.xml
-        return beanMapper.map(sharedFlowPaths, Map.class);
     }
 
 }

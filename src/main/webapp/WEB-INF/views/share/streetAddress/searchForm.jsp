@@ -7,6 +7,7 @@
 </head>
 <body>
 <div id="wrapper">
+    <h1>Street Address Search</h1>
     <c:url value="/share/streetAddresses" var="searchPath"/>
     <form:form action="${searchPath}" method="get" cssClass="form-horizontal" modelAttribute="streetAddressSearchForm">
         <div class="form-group">
@@ -22,6 +23,18 @@
             </div>
             <div class="col-sm-4">
                 <form:errors cssClass="control-label" path="address"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:label path="size" cssClass="col-sm-3 control-label required">Page Size</form:label>
+            <div class="col-sm-1">
+                <form:input type="number" cssClass="form-control" path="size"/>
+            </div>
+            <div class="col-sm-3">
+                <span class="form-control">Default: 20 Max: 200</span>
+            </div>
+            <div class="col-sm-4">
+                <form:errors cssClass="control-label" path="size"/>
             </div>
         </div>
         <div class="form-group">

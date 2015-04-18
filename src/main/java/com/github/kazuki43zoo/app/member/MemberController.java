@@ -27,11 +27,18 @@ public class MemberController {
         return new MemberForm();
     }
 
+    @RequestMapping(method = RequestMethod.GET, params = "cancel")
+    public String cancel(SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
+        return "redirect:/";
+    }
+
     @RequestMapping(method = RequestMethod.GET, params = "clearCreateForm")
     public String clearCreateForm(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "redirect:/members?createForm";
     }
+
 
     @RequestMapping(method = RequestMethod.GET, params = "createForm")
     public String createForm() {
@@ -67,14 +74,16 @@ public class MemberController {
     @PostConstruct
     public void setupAddressSearchCommonScreenFlowPathsMap() {
         Map<String, SharedFlowPaths> map = new HashMap<>();
-        map.put("mainAddressOnCreation", newSharedFlowPaths("createSelectMainAddress", "createForm"));
-        map.put("subAddressOnCreation", newSharedFlowPaths("createSelectSubAddress", "createForm"));
+        map.put("mainAddressOnCreation", newSharedFlowPaths("?selectMainAddress&destination=createForm", "?createForm"));
+        map.put("subAddressOnCreation", newSharedFlowPaths("?selectSubAddress&destination=createForm", "?createForm"));
+        map.put("mainAddressOnUpdating", newSharedFlowPaths("?selectMainAddress&destination=updateForm", "?updateForm"));
+        map.put("subAddressOnUpdating", newSharedFlowPaths("?selectSubAddress&destination=updateForm", "?updateForm"));
         addressSearchSharedFlowPathsMap = Collections.unmodifiableMap(map);
     }
 
-    private SharedFlowPaths newSharedFlowPaths(String finishParam, String cancelParam) {
-        String basePath = "/members?";
-        return new SharedFlowPaths(basePath + finishParam, basePath + cancelParam);
+    private SharedFlowPaths newSharedFlowPaths(String queryStringOnFinish, String queryStringOnCancel) {
+        String basePath = "/members";
+        return new SharedFlowPaths(basePath + queryStringOnFinish, basePath + queryStringOnCancel);
     }
 
     // ### 検索ボタンが押下された際に、フォームデータを保存した上で共通画面フロー(住所検索)側に遷移するためのメソッド。
@@ -85,28 +94,29 @@ public class MemberController {
             @RequestParam("addressSearch") String target,
             RedirectAttributes redirectAttribute) {
         SharedFlowPaths sharedFlowPaths = addressSearchSharedFlowPathsMap.get(target);
-        sharedFlowHelper.takeOverQueryParameters(redirectAttribute, sharedFlowPaths);
-        return "redirect:/share/streetAddresses?searchForm";
+        return sharedFlowHelper.gotoStreetAddressSearch(redirectAttribute, sharedFlowPaths);
     }
 
     // ### 共通画面フロー(住所検索)側で「選択ボタン」を押下した時のリクエストをハンドリングし、メイン住所に反映するためのメソッド。
-    @RequestMapping(method = RequestMethod.POST, params = "createSelectMainAddress")
-    public String createSelectMainAddress(
+    @RequestMapping(method = RequestMethod.POST, params = "selectMainAddress")
+    public String selectMainAddress(
             @ModelAttribute MemberForm memberForm,
-            StreetAddress address) {
+            StreetAddress address,
+            @RequestParam("destination") String destination) {
         memberForm.setMainZipCode(address.getZipCode());
         memberForm.setMainAddress(address.getAddress());
-        return createForm();
+        return "redirect:/members?" + destination;
     }
 
     // ### 共通画面フロー(住所検索)側で「選択ボタン」を押下した時のリクエストをハンドリングし、サブ住所に反映するためのメソッド。
-    @RequestMapping(method = RequestMethod.POST, params = "createSelectSubAddress")
-    public String createSelectSubAddress(
+    @RequestMapping(method = RequestMethod.POST, params = "selectSubAddress")
+    public String selectSubAddress(
             @ModelAttribute MemberForm memberForm,
-            StreetAddress address) {
+            StreetAddress address,
+            @RequestParam("destination") String destination) {
         memberForm.setSubZipCode(address.getZipCode());
         memberForm.setSubAddress(address.getAddress());
-        return createForm();
+        return "redirect:/members?" + destination;
     }
 
 }

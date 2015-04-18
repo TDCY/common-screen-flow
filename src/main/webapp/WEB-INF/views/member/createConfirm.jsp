@@ -7,6 +7,7 @@
 </head>
 <body>
 <div id="wrapper">
+    <h1>Member Creation Confirm</h1>
     <c:url value="/members" var="createPath"/>
     <form:form action="${createPath}" cssClass="form-horizontal" modelAttribute="memberForm">
         <div class="form-group">

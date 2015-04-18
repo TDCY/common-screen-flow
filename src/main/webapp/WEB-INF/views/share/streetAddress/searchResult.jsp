@@ -7,6 +7,14 @@
 </head>
 <body>
 <div id="wrapper">
+    <h1>Street Address Search Result : <fmt:formatNumber value="${page.totalElements}"/> results ( <fmt:formatNumber value="${page.number + 1}"/> / <fmt:formatNumber value="${page.totalPages}"/> Pages )</h1>
+    <c:if test="${1 < page.totalPages}">
+        <div class="paginationArea">
+            <t:pagination page="${page}"
+                          criteriaQuery="${f:query(streetAddressSearchForm)}&${f:query(sharedFlowPaths)}"
+                          outerElementClass="pagination"/>
+        </div>
+    </c:if>
     <table id="userTable" class="table table-hover">
         <tr>
             <th>#</th>
@@ -19,7 +27,7 @@
         </tr>
         <c:forEach var="address" items="${page.content}" varStatus="rowStatus">
             <tr>
-                <td>${(page.number * page.size) + rowStatus.count}</td>
+                <td><fmt:formatNumber value="${(page.number * page.size) + rowStatus.count}"/></td>
                 <td>${f:h(address.zipCode)}</td>
                 <td>${f:h(address.address)}</td>
                 <td>${f:h(address.addressKana)}</td>
@@ -45,19 +53,13 @@
             <t:pagination page="${page}"
                           criteriaQuery="${f:query(streetAddressSearchForm)}&${f:query(sharedFlowPaths)}"
                           outerElementClass="pagination"/>
-            <div>
-                <fmt:formatNumber value="${page.totalElements}"/> results
-            </div>
-            <div>
-                <fmt:formatNumber value="${page.number + 1}"/> /
-                <fmt:formatNumber value="${page.totalPages}"/> Pages
-            </div>
         </div>
     </c:if>
     <c:url value="/share/streetAddresses" var="redoPath"/>
     <form:form action="${redoPath}" method="get" modelAttribute="streetAddressSearchForm">
         <form:hidden path="zipCode"/>
         <form:hidden path="address"/>
+        <form:hidden path="size"/>
         <button name="searchRedo" class="btn btn-primary">Change Criteria</button>
     </form:form>
 </div>

@@ -7,6 +7,7 @@
 </head>
 <body>
 <div id="wrapper">
+    <h1>Member Creation</h1>
     <c:url value="/members" var="createPath"/>
     <form:form action="${createPath}" cssClass="form-horizontal" modelAttribute="memberForm">
         <div class="form-group">
@@ -77,7 +78,7 @@
         </div>
     </form:form>
 
-    <a href="<c:url value="/" />">Cancel</a>
+    <a href="<c:url value="/members?cancel" />">Cancel</a>
 
 </div>
 </body>
