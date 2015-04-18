@@ -4,6 +4,12 @@ package com.github.kazuki43zoo.app.share;
 @lombok.AllArgsConstructor
 @lombok.NoArgsConstructor
 public class SharedFlowPaths {
-    private  String flowFinishPath;
-    private  String flowCancelPath;
+    private String flowFinishPath;
+    private String flowCancelPath;
+
+    boolean isEmpty() {
+        return flowFinishPath == null
+                && flowCancelPath == null;
+    }
+
 }

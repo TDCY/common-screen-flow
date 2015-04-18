@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Transaction Token Error!</title>
-<link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+    <jsp:include page="/WEB-INF/views/common/inc/links.jsp"/>
 </head>
 <body>
     <div id="wrapper">
@@ -29,4 +28,5 @@
     <br>
     </div>
 </body>
+<jsp:include page="/WEB-INF/views/common/inc/scripts.jsp"/>
 </html>

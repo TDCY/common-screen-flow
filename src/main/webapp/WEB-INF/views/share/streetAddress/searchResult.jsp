@@ -60,7 +60,7 @@
         <form:hidden path="zipCode"/>
         <form:hidden path="address"/>
         <form:hidden path="size"/>
-        <button name="searchRedo" class="btn btn-primary">Change Criteria</button>
+        <form:button name="searchRedo" class="btn btn-primary">Change Criteria</form:button>
     </form:form>
 </div>
 </body>
