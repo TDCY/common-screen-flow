@@ -1,6 +1,7 @@
 package com.example.app.share;
 
 import org.springframework.security.web.firewall.RequestRejectedException;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.regex.Pattern;
@@ -17,8 +18,7 @@ public class DefaultSharedFlowPaths implements SharedFlowPaths, Serializable {
     private String flowCancelPath;
 
     public boolean isEmpty() {
-        return flowFinishPath == null
-                && flowCancelPath == null;
+        return !StringUtils.hasText(flowFinishPath) && !StringUtils.hasText(flowCancelPath);
     }
 
     @Override
