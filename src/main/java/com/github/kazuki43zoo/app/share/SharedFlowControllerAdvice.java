@@ -16,12 +16,16 @@ public class SharedFlowControllerAdvice {
         if (sharedFlowPaths.isEmpty()) {
             return null;
         }
-        sharedFlowHelper.validateAllowedPath(sharedFlowPaths.getFlowFinishPath(), "finish path");
-        sharedFlowHelper.validateAllowedPath(sharedFlowPaths.getFlowCancelPath(), "cancel path");
+        validateSharedFlowPaths(sharedFlowPaths);
         if (sharedFlowPaths.getFlowCancelPath() == null) {
             sharedFlowPaths.setFlowCancelPath(sharedFlowPaths.getFlowFinishPath());
         }
         return sharedFlowPaths;
+    }
+
+    private void validateSharedFlowPaths(SharedFlowPaths sharedFlowPaths) {
+        sharedFlowHelper.validateAllowedPath(sharedFlowPaths.getFlowFinishPath(), "finish path");
+        sharedFlowHelper.validateAllowedPath(sharedFlowPaths.getFlowCancelPath(), "cancel path");
     }
 
 }

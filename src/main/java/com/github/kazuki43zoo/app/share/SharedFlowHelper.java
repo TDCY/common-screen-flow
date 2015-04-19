@@ -2,15 +2,17 @@ package com.github.kazuki43zoo.app.share;
 
 import org.dozer.Mapper;
 import org.springframework.security.web.firewall.RequestRejectedException;
-import org.springframework.security.web.util.UrlUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Component
 public class SharedFlowHelper {
+
+    private static final Pattern ALLOWED_PATH_PATTERN = Pattern.compile("^/$|^/[a-zA-Z].*");
 
     @Inject
     Mapper beanMapper;
@@ -32,7 +34,7 @@ public class SharedFlowHelper {
         if (path == null) {
             return;
         }
-        if (UrlUtils.isAbsoluteUrl(path)) {
+        if (!path.isEmpty() && !ALLOWED_PATH_PATTERN.matcher(path).matches()) {
             throw new RequestRejectedException(
                     "Detected the forbidden path pattern into the shared screen flow " + logicalPathName + ". Rejected path : " + path);
         }

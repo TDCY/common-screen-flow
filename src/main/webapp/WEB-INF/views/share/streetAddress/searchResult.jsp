@@ -34,15 +34,12 @@
                 <c:if test="${not empty sharedFlowPaths.flowFinishPath}">
                     <td>
                         <c:url var="selectPath" value="${sharedFlowPaths.flowFinishPath}"/>
-                        <form action="${selectPath}" method="post">
-                            <c:set value="${address}" var="address" scope="request" />
-                            <spring:nestedPath path="address">
-                                <form:hidden path="zipCode"/>
-                                <form:hidden path="address"/>
-                            </spring:nestedPath>
-                            <sec:csrfInput />
-                            <button class="btn btn-primary">Select</button>
-                        </form>
+                        <c:set value="${address}" var="address" scope="request" />
+                        <form:form action="${selectPath}" method="post" modelAttribute="address">
+                            <form:hidden path="zipCode"/>
+                            <form:hidden path="address"/>
+                            <form:button class="btn btn-primary">Select</form:button>
+                        </form:form>
                     </td>
                 </c:if>
             </tr>
@@ -56,12 +53,7 @@
         </div>
     </c:if>
     <c:url value="/share/streetAddresses" var="redoPath"/>
-    <form:form action="${redoPath}" method="get" modelAttribute="streetAddressSearchForm">
-        <form:hidden path="zipCode"/>
-        <form:hidden path="address"/>
-        <form:hidden path="size"/>
-        <form:button name="searchRedo" class="btn btn-primary">Change Criteria</form:button>
-    </form:form>
+    <a href="<c:url value="/share/streetAddresses?searchRedo"/>&${f:h(f:query(streetAddressSearchForm))}&${f:h(f:query(sharedFlowPaths))}" class="btn btn-primary">Change Criteria</a>
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/inc/scripts.jsp"/>
