@@ -18,16 +18,16 @@
     </settings>
 
     <typeAliases>
-        <package name="com.github.kazuki43zoo.domain.model" />
-        <package name="com.github.kazuki43zoo.domain.repository" />
+        <package name="com.example.domain.model" />
+        <package name="com.example.domain.repository" />
 <!--
-        <package name="com.github.kazuki43zoo.infra.mybatis.typehandler" />
+        <package name="com.example.infra.mybatis.typehandler" />
 -->
     </typeAliases>
 
     <typeHandlers>
 <!--
-        <package name="com.github.kazuki43zoo.infra.mybatis.typehandler" />
+        <package name="com.example.infra.mybatis.typehandler" />
 -->
     </typeHandlers>
 

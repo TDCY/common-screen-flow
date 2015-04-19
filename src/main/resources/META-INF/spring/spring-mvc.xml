@@ -23,7 +23,7 @@
 
     <mvc:default-servlet-handler />
 
-    <context:component-scan base-package="com.github.kazuki43zoo.app" />
+    <context:component-scan base-package="com.example.app" />
 
     <mvc:resources mapping="/resources/**"
         location="/resources/,classpath:META-INF/resources/"
@@ -67,7 +67,7 @@
                 <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
                 <bean
                     class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
-                <bean class="com.github.kazuki43zoo.app.share.SharedFlowRequestDataValueProcessor" />
+                <bean class="com.example.app.share.SharedFlowRequestDataValueProcessor" />
             </util:list>
         </constructor-arg>
     </bean>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.domain.repository.address.StreetAddressRepository">
+
+    <sql id="escape">ESCAPE '~'</sql>
+
+    <sql id="findByCriteriaFromWhere">
+        FROM
+            CSVREAD(
+                'classpath:data/KEN_ALL.CSV',
+                'LOCAL_GOVERNMENT_CODE,OLD_ZIP_CODE,ZIP_CODE,KANA1,KANA2,KANA3,ADDRESS1,ADDRESS2,ADDRESS3',
+                'Shift-JIS'
+            )
+        <where>
+            <if test="criteria.zipCode != null">
+                <bind name="escapedZipCode" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toLikeCondition(criteria.zipCode)"/>
+                zip_code LIKE #{escapedZipCode} || '%' <include refid="escape"/>
+            </if>
+            <if test="criteria.address != null">
+                <bind name="escapedAddress" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toLikeCondition(criteria.address)"/>
+                OR
+                    address1 LIKE '%' || #{escapedAddress} || '%' <include refid="escape"/>
+                OR
+                    address2 LIKE '%' || #{escapedAddress} || '%' <include refid="escape"/>
+                OR
+                    address3 LIKE '%' || #{escapedAddress} || '%' <include refid="escape"/>
+                OR
+                    address1 || address2 || address3 LIKE '%' || #{escapedAddress} || '%' <include refid="escape"/>
+                OR
+                    kana1 LIKE '%' || #{escapedAddress} || '%' <include refid="escape"/>
+                OR
+                    kana2 LIKE '%' || #{escapedAddress} || '%' <include refid="escape"/>
+                OR
+                    kana3 LIKE '%' || #{escapedAddress} || '%' <include refid="escape"/>
+                OR
+                    kana1 || kana2 || kana3 LIKE '%' || #{escapedAddress} || '%' <include refid="escape"/>
+            </if>
+        </where>
+    </sql>
+
+    <select id="countByCriteria" resultType="long">
+        SELECT
+            COUNT(*)
+        <include refid="findByCriteriaFromWhere"/>
+    </select>
+
+    <select id="findPageByCriteria" resultType="StreetAddress">
+        SELECT
+            zip_code
+            , address1 || address2 || address3 AS "address"
+            , kana1 || kana2 || kana3 AS "address_kana"
+        <include refid="findByCriteriaFromWhere"/>
+        ORDER BY
+            zip_code
+        LIMIT
+            #{pageable.pageSize}
+        OFFSET
+            #{pageable.offset}
+    </select>
+
+</mapper>

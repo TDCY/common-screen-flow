@@ -44,7 +44,6 @@
             </div>
         </div>
     </form:form>
-
     <a href="<c:url value="${sharedFlowPaths.flowCancelPath}"/>">Cancel</a>
 
 </div>
