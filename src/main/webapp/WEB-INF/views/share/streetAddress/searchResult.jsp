@@ -11,7 +11,7 @@
     <c:if test="${1 < page.totalPages}">
         <div class="paginationArea">
             <t:pagination page="${page}"
-                          criteriaQuery="${f:query(streetAddressSearchForm)}&${f:query(sharedFlowPaths)}"
+                          criteriaQuery="${f:query(streetAddressSearchForm)}&${f:query(sharedFlowPaths.asIdMap())}"
                           outerElementClass="pagination"/>
         </div>
     </c:if>
@@ -48,12 +48,12 @@
     <c:if test="${1 < page.totalPages}">
         <div class="paginationArea">
             <t:pagination page="${page}"
-                          criteriaQuery="${f:query(streetAddressSearchForm)}&${f:query(sharedFlowPaths)}"
+                          criteriaQuery="${f:query(streetAddressSearchForm)}&${f:query(sharedFlowPaths.asIdMap())}"
                           outerElementClass="pagination"/>
         </div>
     </c:if>
     <c:url value="/share/streetAddresses" var="redoPath"/>
-    <a href="<c:url value="/share/streetAddresses?searchRedo"/>&${f:h(f:query(streetAddressSearchForm))}&${f:h(f:query(sharedFlowPaths))}" class="btn btn-primary">Change Criteria</a>
+    <a href="<c:url value="/share/streetAddresses?searchRedo"/>&${f:h(f:query(streetAddressSearchForm))}&${f:h(f:query(sharedFlowPaths.asIdMap()))}" class="btn btn-primary">Change Criteria</a>
 </div>
 </body>
 <jsp:include page="/WEB-INF/views/common/inc/scripts.jsp"/>

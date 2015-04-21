@@ -1,6 +1,7 @@
 package com.example.app.share.address;
 
 import com.example.app.share.DefaultSharedFlowPaths;
+import com.example.app.share.SharedFlowController;
 import com.example.app.share.SharedFlowHelper;
 import com.example.app.share.SharedFlowPaths;
 import com.example.domain.model.StreetAddress;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.inject.Inject;
 
 @RequestMapping("share/streetAddresses")
-@Controller
+@SharedFlowController
 public class StreetAddressSearchController {
 
     @Inject
@@ -31,11 +32,6 @@ public class StreetAddressSearchController {
 
     @Inject
     Mapper beanMapper;
-
-    @ModelAttribute(SharedFlowPaths.MODEL_NAME)
-    public SharedFlowPaths setupSharedFlowPaths(DefaultSharedFlowPaths requestedSharedFlowPaths) {
-        return sharedFlowHelper.constructSharedFlowPaths(requestedSharedFlowPaths);
-    }
 
     @ModelAttribute
     public StreetAddressSearchForm setupSearchForm() {

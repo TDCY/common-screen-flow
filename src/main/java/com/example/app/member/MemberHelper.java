@@ -35,7 +35,10 @@ public class MemberHelper {
 
     private SharedFlowPaths newSharedFlowPaths(String queryStringOnFinish, String queryStringOnCancel) {
         String basePath = "/members?";
-        return new DefaultSharedFlowPaths(basePath + queryStringOnFinish, basePath + queryStringOnCancel);
+        DefaultSharedFlowPaths defaultSharedFlowPaths = new DefaultSharedFlowPaths();
+        defaultSharedFlowPaths.setFlowFinishPath(basePath + queryStringOnFinish);
+        defaultSharedFlowPaths.setFlowCancelPath(basePath + queryStringOnCancel);
+        return defaultSharedFlowPaths;
     }
 
     SharedFlowPaths decideAddressSearchSharedFlowPaths(String addressSearchButton) {
